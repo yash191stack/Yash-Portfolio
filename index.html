@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YASH SHARMA — CYBER-NEXUS CENTRAL PORTAL</title>
+  
+  <!-- CDNs for visual logic and smooth animation transitions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  
+  <!-- Externalized custom design system -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       SYSTEM OVERLAYS & GRAPHICS ENGINES
+       ========================================== -->
+  
+  <!-- CRT Screen Glitch & Scanline Filters -->
+  <div class="crt-overlay"></div>
+  <div class="crt-vignette"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor System (Magnetic Ring) -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Three.js 3D WebGL Constellation Canvas -->
+  <div id="canvas3d"></div>
+
+  <!-- ==========================================
+       HUD NAVIGATION BAR
+       ========================================== -->
+  <header class="hud-nav neon-border">
+    <div class="hud-logo">YASH SHARMA <span>YS_CORE_v1.0.3</span></div>
+    
+    <div class="hud-links-container">
+      <ul class="hud-nav-links">
+        <li><a href="#about" class="active">About</a></li>
+        <li><a href="#terminal">Terminal</a></li>
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Timeline</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Blinking System Status Beacon -->
+      <div class="system-status-led">
+        <span class="led-dot standby" id="status-led"></span>
+        <span>SYS_STATUS: ACTIVE</span>
+      </div>
+      
+      <!-- Mobile burger menu -->
+      <button class="hud-burger" id="hud-burger" aria-label="Toggle navigation port">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Dropdown -->
+  <div class="hud-mobile-menu" id="hud-mobile-menu">
+    <a href="#about" class="mobile-menu-link">About</a>
+    <a href="#terminal" class="mobile-menu-link">Terminal</a>
+    <a href="#projects" class="mobile-menu-link">Work</a>
+    <a href="#skills" class="mobile-menu-link">Skills</a>
+    <a href="#experience" class="mobile-menu-link">Timeline</a>
+    <a href="#contact" class="mobile-menu-link">Contact</a>
+  </div>
+
+  <!-- Fullscreen Matrix rain overlay mode -->
+  <div id="matrix-overlay">
+    <button class="matrix-exit-btn" id="exit-matrix-btn">EXIT MATRIX [ESC]</button>
+    <canvas id="matrix-canvas"></canvas>
+  </div>
+
+  <!-- ==========================================
+       MAIN HUD FRAME & PAGE CONTENT
+       ========================================== -->
+  <main class="hud-frame">
+
+    <!-- HERO SECTION & HARDWARE STATUS -->
+    <section class="hero-layout" id="about">
+      
+      <!-- Hero core panel -->
+      <div class="hud-panel panel-corners hero-main-panel">
+        <p class="hero-eyebrow">// PORTAL_GATEWAY // SECURE_ACCESS</p>
+        <div class="hero-name-container">
+          <h1 class="hero-glitch-name">YASH <span>SHARMA</span></h1>
+        </div>
+        <p class="hero-tagline">
+          Building scalable, end-to-end full-stack platforms — from AI legal tools to chemical safety scanners. I don't stop at full-stack; I have a massive hunger to master system architecture, advanced AI workflows, and high-performance engineering. I build, ship, and conquer.
+        </p>
+        <div class="hero-action-buttons">
+          <a href="#contact" class="cyber-btn">INQUIRE PROTOCOL</a>
+          <a href="https://github.com/yash191stack" target="_blank" class="cyber-btn accent">VIEW SOURCE GITHUB ↗</a>
+        </div>
+      </div>
+
+      <!-- Live hardware diagnostics panel -->
+      <div class="hud-panel panel-corners diag-panel">
+        <div class="panel-header">
+          <h3 class="panel-title">SYS_DIAGNOSTICS</h3>
+          <span class="panel-subtitle">LIVE TELEMETRY</span>
+        </div>
+        
+        <div class="diag-grid">
+          <div class="diag-row">
+            <span class="diag-label">candidate:</span>
+            <span class="diag-val">Yash Sharma</span>
+          </div>
+          <div class="diag-row">
+            <span class="diag-label">class:</span>
+            <span class="diag-val cyan">Full Stack Developer</span>
+          </div>
+          <div class="diag-row">
+            <span class="diag-label">location:</span>
+            <span class="diag-val">Aligarh, India [UTC+5:30]</span>
+          </div>
+          <div class="diag-row">
+            <span class="diag-label">academy:</span>
+            <span class="diag-val">GLA University, Mathura</span>
+          </div>
+          <div class="diag-row">
+            <span class="diag-label">course:</span>
+            <span class="diag-val cyan">B.Tech CSE [2024-2028]</span>
+          </div>
+          <div class="diag-row">
+            <span class="diag-label">cgpa metric:</span>
+            <span class="diag-val">7.4 / 10</span>
+          </div>
+          
+          <div class="diag-row" style="flex-direction: column;">
+            <div style="display:flex; justify-content:space-between; width:100%;">
+              <span class="diag-label">cpu core load:</span>
+              <span class="diag-val">92%</span>
+            </div>
+            <div class="diag-bar">
+              <div class="diag-bar-fill warning"></div>
+            </div>
+          </div>
+
+          <div class="diag-row" style="flex-direction: column;">
+            <div style="display:flex; justify-content:space-between; width:100%;">
+              <span class="diag-label">deployment readiness:</span>
+              <span class="diag-val">100%</span>
+            </div>
+            <div class="diag-bar">
+              <div class="diag-bar-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVELOPER LINUX CONSOLE -->
+    <section class="hud-panel panel-corners" id="terminal">
+      <div class="panel-header">
+        <h3 class="panel-title">>_ CENTRAL_DEVELOPER_CONSOLE</h3>
+        <span class="panel-subtitle">SECURE TERMINAL SHELL</span>
+      </div>
+      
+      <div class="terminal-container neon-border">
+        <div class="terminal-header">
+          <div class="terminal-window-buttons">
+            <span class="terminal-win-btn close"></span>
+            <span class="terminal-win-btn min"></span>
+            <span class="terminal-win-btn max"></span>
+          </div>
+          <span>ys_bash_v1.0.3@nexus-server</span>
+          <span style="opacity: 0.5;">TTY: /dev/pts/0</span>
+        </div>
+        
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-output" id="terminal-output">
+            <!-- Terminal Welcome Message -->
+            <div class="terminal-welcome">
+              <h3>SYSTEM INITIALIZATION COMPlETE...</h3>
+              <p>Type "help" in the command line prompt below to view active commands index.</p>
+            </div>
+          </div>
+          
+          <!-- CLI Input Line -->
+          <div class="terminal-command-line">
+            <span class="terminal-prompt">yash_sharma@nexus-core:~$</span>
+            <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" autofocus>
+            <span class="caret-cursor"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CYBER DECK PROJECTS SHOWCASE -->
+    <section class="hud-panel panel-corners" id="projects">
+      <div class="panel-header">
+        <h3 class="panel-title">WORK_BAY // CYBER_DECK</h3>
+        <span class="panel-subtitle">inspecting deployed units</span>
+      </div>
+      
+      <div class="cyber-deck-grid">
+        <!-- Drive slots selection -->
+        <div class="deck-slots">
+          
+          <!-- Slot 01: ScanSure -->
+          <div class="deck-slot active" data-project="scansure">
+            <div class="slot-info">
+              <span class="slot-num">01</span>
+              <div>
+                <h4 class="slot-title">SCANSURE</h4>
+                <span class="slot-stack-badge">NODE.JS / MONGO</span>
+              </div>
+            </div>
+            <div class="slot-status">
+              <span class="led-dot"></span>
+              <span>LIVE_DEP</span>
+            </div>
+          </div>
+
+          <!-- Slot 02: GoValid -->
+          <div class="deck-slot" data-project="govalid">
+            <div class="slot-info">
+              <span class="slot-num">02</span>
+              <div>
+                <h4 class="slot-title">GOVALID</h4>
+                <span class="slot-stack-badge">DJANGO / PYTHON</span>
+              </div>
+            </div>
+            <div class="slot-status">
+              <span class="led-dot"></span>
+              <span>LIVE_DEP</span>
+            </div>
+          </div>
+
+          <!-- Slot 03: Teraaz AI -->
+          <div class="deck-slot" data-project="teraaz">
+            <div class="slot-info">
+              <span class="slot-num">03</span>
+              <div>
+                <h4 class="slot-title">TERAAZ AI</h4>
+                <span class="slot-stack-badge">DJANGO / REACT</span>
+              </div>
+            </div>
+            <div class="slot-status">
+              <span class="led-dot"></span>
+              <span>LIVE_DEP</span>
+            </div>
+          </div>
+          
+        </div>
+
+        <!-- Telemetry preview console -->
+        <div class="deck-console neon-border" id="console-display">
+          <div class="console-display">
+            <!-- Scan screen visualizer -->
+            <div class="console-visualizer">
+              <img src="assets/scansure.jpg" id="console-img" alt="ScanSure Visual HUD">
+            </div>
+
+            <h3 class="panel-title" id="console-proj-title" style="margin-bottom:15px; font-size:1.5rem;">ScanSure</h3>
+            
+            <!-- Metadata columns -->
+            <div class="console-meta-grid">
+              <div class="console-meta-card">
+                <h4>diagnostics_spec:</h4>
+                <p id="console-meta-1">AI safety scoring / node.js / render api</p>
+              </div>
+              <div class="console-meta-card">
+                <h4>telemetry_status:</h4>
+                <p id="console-meta-2">94% confidence score / database triggers</p>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <p class="console-desc" id="console-desc-text">
+              An AI-powered chemical ingredient scanner designed to analyze consumer products in real time. It parses lists of chemicals, looks up toxicological profiles, and returns detailed safety indicators, risk grades, confidence parameters, and summaries.
+            </p>
+
+            <!-- Tech Badges -->
+            <div class="console-tags" id="console-tags-container">
+              <span class="console-tag">Node.js</span>
+              <span class="console-tag">Express</span>
+              <span class="console-tag">JavaScript</span>
+              <span class="console-tag">MongoDB</span>
+              <span class="console-tag">AI Risk API</span>
+              <span class="console-tag">EJS Templating</span>
+            </div>
+
+            <!-- Actions buttons -->
+            <div class="console-actions">
+              <a href="https://scansure.onrender.com" target="_blank" class="cyber-btn" id="console-live-btn">LAUNCH UNIT ↗</a>
+              <a href="https://github.com/yash191stack/Scan-Sure" target="_blank" class="cyber-btn accent" id="console-src-btn">INSPECT CODE ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE TECHNOLOGY MATRIX -->
+    <section class="hud-panel panel-corners" id="skills">
+      <div class="panel-header">
+        <h3 class="panel-title">TECHNOLOGY_COMPETENCIES // SKILLS_MATRIX</h3>
+        <span class="panel-subtitle">scanning database capabilities</span>
+      </div>
+      
+      <div class="skills-grid">
+        <div class="skill-card">
+          <span class="skill-icon">🌐</span>
+          <h4 class="skill-name">HTML5</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🎨</span>
+          <h4 class="skill-name">CSS3</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⚡</span>
+          <h4 class="skill-name">JavaScript</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⚛️</span>
+          <h4 class="skill-name">Next.js</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">📘</span>
+          <h4 class="skill-name">TypeScript</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">⚛️</span>
+          <h4 class="skill-name">React</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🟢</span>
+          <h4 class="skill-name">Node.js</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🚂</span>
+          <h4 class="skill-name">Express</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🍃</span>
+          <h4 class="skill-name">MongoDB</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🎸</span>
+          <h4 class="skill-name">Django</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🐍</span>
+          <h4 class="skill-name">Python</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🐙</span>
+          <h4 class="skill-name">Git & GitHub</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🤖</span>
+          <h4 class="skill-name">AI Prompting</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">🌊</span>
+          <h4 class="skill-name">Tailwind</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">☕</span>
+          <h4 class="skill-name">Java</h4>
+        </div>
+        <div class="skill-card">
+          <span class="skill-icon">©️</span>
+          <h4 class="skill-name">C Lang</h4>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE & CERTIFICATES CHRONOLOGY -->
+    <section class="hud-panel panel-corners" id="experience">
+      <div class="panel-header">
+        <h3 class="panel-title">CHRONOLOGY // LOG_RECORDS</h3>
+        <span class="panel-subtitle">fetching timeline feed</span>
+      </div>
+      
+      <div class="timeline-list">
+        
+        <!-- Record 1 -->
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title">MERN Stack Developer <span>@ Skill Vedanth</span></h4>
+            <span class="timeline-date">2026</span>
+          </div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Learned core MERN Stack development patterns and full-stack application lifecycle flows.</li>
+              <li>Engineered interactive frontends using React and designed Express database routers using MongoDB.</li>
+              <li>Successfully certified in full MERN capabilities.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Record 2 -->
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title">Django Full Stack Intern <span>@ TheAngaar Batch</span></h4>
+            <span class="timeline-date">June 2025 - July 2025</span>
+          </div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Designed and published the <strong>AI Startup Idea Validator</strong> (GoValid) dynamically running SWOT scanners.</li>
+              <li>Configured Django database schemas, Python logic structures, and Bootstrap homepages.</li>
+              <li>Gained deep knowledge in AI model integrations and REST API handshakes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Record 3 -->
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title">Active Hackathon Architect <span>@ IIT BHU & GLA University</span></h4>
+            <span class="timeline-date">2025 - 2026</span>
+          </div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Participated in <strong>Techneex 2026 (IIT BHU, Varanasi)</strong>, engaging in hackathons and technical events.</li>
+              <li>Secured high rankings in the <strong>AI Nirmaan Hackathon</strong> (GLA University, 2026) and <strong>Spark Hack</strong> (Sanskriti University).</li>
+              <li>Built real-time solutions under strict time constraints in hackathons like Code Veda, Hack It Out (IIT BHU), and Intrusion.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Record 4 -->
+        <div class="timeline-item">
+          <div class="timeline-header">
+            <h4 class="timeline-title">Academic Qualifications <span>@ GLA University</span></h4>
+            <span class="timeline-date">2024 - 2028</span>
+          </div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Bachelor of Technology in Computer Science and Engineering | GLA University, Mathura. Current CGPA: 7.4.</li>
+              <li>Wisdom Public School, Aligarh — Intermediate (PCM Core) | Score: 67% (2024).</li>
+              <li>Wisdom Public School, Aligarh — High School | Score: 88% (2022).</li>
+              <li>Certified in HTML, CSS, JavaScript via Infosys Springboard.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TRANSMISSION PORT (CONTACT GATEWAY) -->
+    <section class="hud-panel panel-corners" id="contact">
+      <div class="panel-header">
+        <h3 class="panel-title">TRANSMISSION_GATEWAY // SEND_MESSAGE</h3>
+        <span class="panel-subtitle">secure communication uplink</span>
+      </div>
+      
+      <div class="contact-layout">
+        <div class="contact-meta">
+          <p class="contact-meta-p">
+            System ready to receive messages. Initiate connection through the contact form or access direct ports listed below. The candidate's beacons are currently monitoring hiring proposals.
+          </p>
+          
+          <div class="contact-links-grid">
+            <a href="mailto:yshsharma90913@gmail.com" class="contact-card">
+              <span class="contact-card-icon">✉</span>
+              <div>
+                <div class="contact-card-label">Primary Uplink</div>
+                <div class="contact-card-value">yshsharma90913@gmail.com</div>
+              </div>
+            </a>
+            
+            <a href="https://linkedin.com/in/yashsharma191" target="_blank" class="contact-card">
+              <span class="contact-card-icon">🔗</span>
+              <div>
+                <div class="contact-card-label">LinkedIn Grid</div>
+                <div class="contact-card-value">in/yashsharma191 ↗</div>
+              </div>
+            </a>
+
+            <a href="https://github.com/yash191stack" target="_blank" class="contact-card">
+              <span class="contact-card-icon">💻</span>
+              <div>
+                <div class="contact-card-label">GitHub Core</div>
+                <div class="contact-card-value">github.com/yash191stack ↗</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Encryption Contact Form (Real Endpoint Integration via Formspree) -->
+        <!-- Replace YOUR_FORMSPREE_ID in action attribute with your actual Formspree ID to receive real emails -->
+        <form class="cyber-form" id="contact-form" action="https://formspree.io/f/xpqejgjy" method="POST">
+          <div class="form-group">
+            <label for="contact-name">Sender Identification (Name):</label>
+            <input type="text" id="contact-name" name="name" placeholder="E.g., Recruiter, Tech Lead" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Uplink Gateway (Email Address):</label>
+            <input type="email" id="contact-email" name="email" placeholder="E.g., lead@techfirm.com" required>
+          </div>
+          <div class="form-group">
+            <label for="contact-message">Telemetry Message Payload:</label>
+            <textarea id="contact-message" name="message" placeholder="Draft transmission parameters..." required></textarea>
+          </div>
+          
+          <!-- Client Feedback -->
+          <div class="form-feedback" id="form-feedback"></div>
+          
+          <button type="submit" class="cyber-btn" style="width: 100%;">SEND SECURE TRANSMISSION</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       FOOTER CORE HUD DASHBOARD
+       ========================================== -->
+  <footer class="hud-dashboard neon-border">
+    <div class="dashboard-grid">
+      
+      <!-- System Controls (Theme & Sound) -->
+      <div class="dashboard-controls">
+        <div class="control-group">
+          <span class="control-label">TERMINAL_THEME:</span>
+          <div class="theme-selectors">
+            <span class="theme-btn t-emerald active" title="Theme: Emerald Green"></span>
+            <span class="theme-btn t-amber" title="Theme: Amber Gold"></span>
+            <span class="theme-btn t-cyberpink" title="Theme: Cyber Pink"></span>
+            <span class="theme-btn t-neoncyan" title="Theme: Neon Cyan"></span>
+          </div>
+        </div>
+        
+        <button class="audio-toggle-btn" id="audio-toggle">🔊 AUDIO: OFF</button>
+      </div>
+
+      <div class="dashboard-copyright">
+        © 2026 YASH SHARMA // SECURED TERMINAL
+      </div>
+      
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       EXTERNAL SCRIPTS EXECUTION
+       ========================================== -->
+  <script src="script.js"></script>
+  <script src="terminal.js"></script>
+</body>
+</html>
